@@ -1,9 +1,26 @@
 package com.projeto_engenharia.projeto.professor;
 
-public record ProfessorResponseDTO(Long cpf, String nome, String telefone, String email, String isAdmin, Double valor_hora_aulas) {
+import java.time.LocalDate;
+
+import com.projeto_engenharia.projeto.enums.Especialidade;
+import com.projeto_engenharia.projeto.enums.Etnia;
+import com.projeto_engenharia.projeto.enums.Genero;
+import com.projeto_engenharia.projeto.enums.GrauAcademico;
+
+public record ProfessorResponseDTO(		
+		Long cpf, 
+		String nome, 
+		String telefone, 
+		LocalDate dtNascimento,
+		GrauAcademico grauAcademico,
+		Especialidade especialidade,
+		String instituicaoFormadora,
+		Double valor_hora_aulas,
+		Genero genero,
+		Etnia etnia) {
         
     public ProfessorResponseDTO(Professor professor){
-        this(professor.getCpf(), professor.getNome(), professor.getTelefone(), professor.getEmail(), professor.getIsAdmin(), professor.getValor_hora_aulas());
+        this(professor.getCpf(), professor.getNome(), professor.getTelefone(), professor.getDtNascimento(), professor.getGrauAcademico(), professor.getEspecialidade() , professor.getInstituicaoFormadora() , professor.getValor_hora_aulas(), professor.getGenero(), professor.getEtnia());
     }
 
 }

@@ -1,40 +1,62 @@
 package com.projeto_engenharia.projeto.professor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.projeto_engenharia.projeto.enums.Especialidade;
+import com.projeto_engenharia.projeto.enums.Etnia;
+import com.projeto_engenharia.projeto.enums.Genero;
+import com.projeto_engenharia.projeto.enums.GrauAcademico;
+import com.projeto_engenharia.projeto.user.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
+import lombok.Data;
 
 @Table(name = "professores")
 @Entity(name = "professores")
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "cpf")
 public class Professor {
-    @Id
+
+	@Id
     private Long cpf;
     private String nome;
     private String telefone;
-    private String email;
-    private String isAdmin;
+    private LocalDate dtNascimento;
+    @Enumerated(EnumType.STRING)
+    private GrauAcademico grauAcademico;
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
+    private String instituicaoFormadora;
     private Double valor_hora_aulas;
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dt_criacao;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
+    @Enumerated(EnumType.STRING)
+    private Etnia etnia;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+    
+    public Professor(ProfessorRequestDTO data, User user) {
+    	this.cpf = data.cpf();
+    	this.nome = data.nome();
+    	this.telefone = data.telefone();
+    	this.dtNascimento = data.dtNascimento();
+    	this.grauAcademico = data.grauAcademico();
+    	this.especialidade = data.especialidade();
+    	this.instituicaoFormadora = data.instituicaoFormadora();
+    	this.valor_hora_aulas = data.valor_hora_aulas();
+    	this.genero = data.genero();
+    	this.etnia = data.etnia();
+    	this.user = user;
+	}
 
-    public Professor(ProfessorRequestDTO data){
-        this.cpf = data.cpf();
-        this.nome = data.nome();
-        this.telefone = data.telefone();
-        this.email = data.email();
-        this.isAdmin = data.isAdmin();
-        this.valor_hora_aulas = data.valor_hora_aulas();
-    }
+
 }
