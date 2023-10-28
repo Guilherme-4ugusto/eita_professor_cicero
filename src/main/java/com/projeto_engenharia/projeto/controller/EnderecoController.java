@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,11 @@ public class EnderecoController {
 	private EnderecoRepository enderecoRepository;
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping
-    public ResponseEntity saveEndereco(@Valid @RequestBody EnderecoRequestDTO data) {
-		User newUser = userRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));;
-		Endereco newEndereco = enderecoRepository.save(new Endereco(data, newUser));
-		return ResponseEntity.status(HttpStatus.CREATED).body("Endereco adicionado com sucesso");
-		
+    @PostMapping("/{userId}")
+    public ResponseEntity saveEndereco(@PathVariable Long userId, @Valid  @RequestBody EnderecoRequestDTO data) {
+    	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+		Endereco endereco = enderecoRepository.save(new Endereco(data, user));
+		return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
 	}
 
 }

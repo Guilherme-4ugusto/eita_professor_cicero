@@ -15,12 +15,12 @@ public record ProfessorResponseDTO(
 		GrauAcademico grauAcademico,
 		Especialidade especialidade,
 		String instituicaoFormadora,
-		Double valor_hora_aulas,
+		Double valorHoraAulas,
 		Genero genero,
 		Etnia etnia) {
         
     public ProfessorResponseDTO(Professor professor){
-        this(professor.getCpf(), professor.getNome(), professor.getTelefone(), professor.getDtNascimento(), professor.getGrauAcademico(), professor.getEspecialidade() , professor.getInstituicaoFormadora() , professor.getValor_hora_aulas(), professor.getGenero(), professor.getEtnia());
+        this(professor.getCpf(), professor.getNome(), professor.getTelefone(), professor.getDtNascimento(), professor.getGrauAcademico(), professor.getEspecialidade() , professor.getInstituicaoFormadora() , professor.getValorHoraAulas(), professor.getGenero(), professor.getEtnia());
     }
 
 }

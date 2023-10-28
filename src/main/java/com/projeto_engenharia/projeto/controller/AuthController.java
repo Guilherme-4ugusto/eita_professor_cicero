@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +32,13 @@ public class AuthController {
 	public ResponseEntity login(@RequestBody Login login) {
 		try {
 	        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-	                new UsernamePasswordAuthenticationToken(login.login(), login.password());
+	                new UsernamePasswordAuthenticationToken(login.email(), login.password());
 	        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 	        var usuario = (User) authentication.getPrincipal();
 	        String token = tokenService.gerarToken(usuario);
 	        return ResponseEntity.ok(token);
 	    } catch (AuthenticationException ex) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos");
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha incorretos");
 	    }
 		
 		

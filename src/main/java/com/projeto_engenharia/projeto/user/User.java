@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.projeto_engenharia.projeto.enums.Role;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,23 +22,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity(name = "users")
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Data
 public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String login;
+	@Column(name = "email", unique = true, length = 100)
+	private String email;
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private Role role;
@@ -46,10 +50,8 @@ public class User implements UserDetails{
     
     public User(UserRequestDTO data) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    	this.login = data.login();
-    	this.password = passwordEncoder.encode(data.password());
-    	this.role = data.role();
-    	
+    	this.email = data.email();
+    	this.password = passwordEncoder.encode(data.password());    	
     }
 
 	@Override
@@ -61,13 +63,13 @@ public class User implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return login;
+		return email;
 	}
-	
+
 	@Override
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -92,4 +94,5 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
 }

@@ -31,9 +31,7 @@ public class Configurations {
 		return http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/professor").permitAll()
-                .requestMatchers(HttpMethod.POST, "/user/professor").permitAll()
-                .requestMatchers(HttpMethod.POST, "/endereco").permitAll()
+				.requestMatchers(HttpMethod.POST, "/user/aluno").permitAll()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated().and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -35,7 +35,7 @@ public class Professor {
     @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
     private String instituicaoFormadora;
-    private Double valor_hora_aulas;
+    private Double valorHoraAulas;
     @Enumerated(EnumType.STRING)
     private Genero genero;
     @Enumerated(EnumType.STRING)
@@ -52,7 +52,7 @@ public class Professor {
     	this.grauAcademico = data.grauAcademico();
     	this.especialidade = data.especialidade();
     	this.instituicaoFormadora = data.instituicaoFormadora();
-    	this.valor_hora_aulas = data.valor_hora_aulas();
+    	this.valorHoraAulas = data.valorHoraAulas();
     	this.genero = data.genero();
     	this.etnia = data.etnia();
     	this.user = user;

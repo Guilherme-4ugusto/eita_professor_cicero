@@ -14,7 +14,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 
 public record ProfessorRequestDTO(
-		@Pattern(regexp = "\\d{11}", message = "CPF inválido")
 		Long cpf,
 		@NotBlank(message = "Nome é obrigatório")
 		String nome,
@@ -29,13 +28,11 @@ public record ProfessorRequestDTO(
 		@NotBlank(message = "Instituição formadora é obrigatória")
 		String instituicaoFormadora,
 		@Positive(message = "O valor das horas de aulas deve ser positivo")
-		Double valor_hora_aulas,
+		Double valorHoraAulas,
 		@NotNull(message = "Gênero é obrigatório")
 		Genero genero,
 		@NotNull(message = "Etnia é obrigatória")
-		Etnia etnia,
-		@NotNull(message = "ID do usuário é obrigatório")
-		Long id
+		Etnia etnia
 		) {
     
 }

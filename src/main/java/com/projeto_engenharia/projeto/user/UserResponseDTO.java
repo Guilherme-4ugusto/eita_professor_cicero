@@ -6,6 +6,10 @@ public record UserResponseDTO(
 		String email,
 		String password,
 		Role role
-		) {
+) {
+
+	public UserResponseDTO(User data){
+		this(data.getEmail(), data.getPassword(), data.getRole());
+	}
 
 }

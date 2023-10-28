@@ -2,7 +2,7 @@ package com.projeto_engenharia.projeto.enums;
 
 public enum Role {
 	
-	user,
+	aluno,
 	professor,
 	admin
 

@@ -16,9 +16,7 @@ public record EnderecoRequestDTO (
 		@NotBlank
 		String uf,
 		String complemento, 
-		String numero,
-		@NotBlank
-		Long id
+		String numero
 		){
 
 }
