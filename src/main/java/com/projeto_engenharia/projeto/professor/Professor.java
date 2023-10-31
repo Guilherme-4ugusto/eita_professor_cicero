@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
-@Table(name = "professores")
+@Table(name = "professores", schema = "plataforma_cursos")
 @Entity(name = "professores")
 @Data
 @NoArgsConstructor

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,14 +21,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "users")
-@Table(name = "users")
+@Table(name = "users", schema = "plataforma_cursos")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -46,8 +44,10 @@ public class User implements UserDetails{
 	private Role role;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dt_criacao;
-    
+    private Date dtCriacao;
+	@Column(name = "is_ativo", columnDefinition = "boolean default false")
+    private Boolean isAtivo;
+
     public User(UserRequestDTO data) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     	this.email = data.email();
@@ -95,4 +95,8 @@ public class User implements UserDetails{
 		return true;
 	}
 	
+	public Boolean userExists(Long userId){
+		
+		return false;
+	}
 }
