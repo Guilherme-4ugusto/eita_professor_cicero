@@ -1,13 +1,13 @@
 package com.projeto_engenharia.projeto.enums;
 
-public enum UsuarioStatus {
+public enum UserStatus {
     ACTIVE(true, "active"),
     INACTIVE(false, "inactive");
 
     private final Boolean value;
     private final String description;
 
-    UsuarioStatus(Boolean value, String description){
+    UserStatus(Boolean value, String description){
         this.value = value;
         this.description = description;
     }
@@ -20,8 +20,8 @@ public enum UsuarioStatus {
         return description;
     }
 
-    public static UsuarioStatus fromDescription(String description) {
-        for (UsuarioStatus status : UsuarioStatus.values()){
+    public static UserStatus fromDescription(String description) {
+        for (UserStatus status : UserStatus.values()){
             if(status.getDescription().equalsIgnoreCase(description)){
                 return status;
             }
@@ -29,8 +29,8 @@ public enum UsuarioStatus {
         throw new IllegalArgumentException("Status inválido: "+ description);
     }
 
-    public static UsuarioStatus fromValue(Boolean statusValue){
-        for(UsuarioStatus status : UsuarioStatus.values()){
+    public static UserStatus fromValue(Boolean statusValue){
+        for(UserStatus status : UserStatus.values()){
             if(status.getValue() == statusValue){
                 return status;
             }

@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository <User, Long>{
 
 	@Modifying
 	@Transactional
-	@Query("UPDATE users u SET u.isAtivo = :newValue WHERE u.id = :userID")
-    void updateActiveUserStatus(@Param("userID") Long userID ,@Param("newValue") Boolean isAtivo);
+	@Query("UPDATE users u SET u.isActive = :newValue WHERE u.id = :userID")
+    void updateActiveUserStatus(@Param("userID") Long userID ,@Param("newValue") Boolean isActive);
 
 }

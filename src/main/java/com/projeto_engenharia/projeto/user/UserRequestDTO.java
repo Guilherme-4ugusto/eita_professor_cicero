@@ -1,5 +1,7 @@
 package com.projeto_engenharia.projeto.user;
 
+import com.projeto_engenharia.projeto.enums.UserStatus;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,7 +15,8 @@ public record UserRequestDTO (
 	        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$",
 	        message = "A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial."
 	    )
-		String password
+		String password,
+		String isActive
 		){
 
 }

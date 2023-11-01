@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 public class Endereco {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "address_seq", sequenceName = "address_sequence", initialValue = 100000, allocationSize = 20)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator =  "address_seq")
 	private Long id;
 	private String cep;
 	private String logradouro;

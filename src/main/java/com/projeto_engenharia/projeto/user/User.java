@@ -18,6 +18,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -35,7 +36,8 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "users_seq", sequenceName = "users_sequence", initialValue = 100000, allocationSize = 20)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator =  "users_seq")
 	private Long id;
 	@Column(name = "email", unique = true, length = 100)
 	private String email;
@@ -44,9 +46,9 @@ public class User implements UserDetails{
 	private Role role;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dtCriacao;
-	@Column(name = "is_ativo", columnDefinition = "boolean default false")
-    private Boolean isAtivo;
+    private Date createDate;
+	@Column(name = "is_active", columnDefinition = "boolean default false")
+    private Boolean isActive;
 
     public User(UserRequestDTO data) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.projeto_engenharia.projeto.user.User;
 
 @Service
@@ -27,8 +28,12 @@ public class TokenService {
 	}
 
 	public String getSubject(String token) {
-		return JWT.require(Algorithm.HMAC256("secreta"))
-				.withIssuer("Projeto")
-				.build().verify(token).getSubject();
+		try {
+			return JWT.require(Algorithm.HMAC256("secreta"))
+			.withIssuer("Projeto")
+			.build().verify(token).getSubject();
+		} catch (TokenExpiredException e) {
+			throw new TokenExpiredException("O token de acesso expirou", e.getExpiredOn());
+		}
 	}
 }

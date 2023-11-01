@@ -1,5 +1,8 @@
 package com.projeto_engenharia.projeto.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,6 @@ import com.projeto_engenharia.projeto.auth.Login;
 import com.projeto_engenharia.projeto.service.TokenService;
 import com.projeto_engenharia.projeto.user.User;
 
-import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/login")
 public class AuthController {
@@ -38,7 +39,9 @@ public class AuthController {
 	        String token = tokenService.gerarToken(usuario);
 	        return ResponseEntity.ok(token);
 	    } catch (AuthenticationException ex) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha incorretos");
+			Map<String, String> errors = new HashMap<>();
+			errors.put("error", "Email ou senha incorretos.");
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
 	    }
 		
 		
