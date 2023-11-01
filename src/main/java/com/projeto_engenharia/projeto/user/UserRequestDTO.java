@@ -1,7 +1,5 @@
 package com.projeto_engenharia.projeto.user;
 
-import com.projeto_engenharia.projeto.enums.UserStatus;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
