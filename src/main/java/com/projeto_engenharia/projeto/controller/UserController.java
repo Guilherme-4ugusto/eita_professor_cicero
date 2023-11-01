@@ -22,6 +22,7 @@ import com.projeto_engenharia.projeto.user.User;
 import com.projeto_engenharia.projeto.user.UserRepository;
 import com.projeto_engenharia.projeto.user.UserRequestDTO;
 import com.projeto_engenharia.projeto.user.UserResponseDTO;
+import com.projeto_engenharia.projeto.utils.Utils;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,7 +39,7 @@ public class UserController {
 	@PostMapping("/{role}")
 	public ResponseEntity<UserResponseDTO> saveUser(@PathVariable String role,@Valid @RequestBody UserRequestDTO data) {
 		User userRequest = new User(data);
-		userRequest.setRole(Role.valueOf(role));
+		userRequest.setRole(Utils.parseRole(role));
 		userRequest.setIsActive(UserStatus.fromDescription(data.isActive()).getValue());
 		User user = userRepository.save(userRequest);
 		UserResponseDTO response = new UserResponseDTO(user);

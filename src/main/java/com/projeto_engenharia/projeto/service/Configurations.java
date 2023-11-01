@@ -53,6 +53,8 @@ public class Configurations {
 				matches 
 					   .requestMatchers("/user/aluno").permitAll()
 					   .requestMatchers(HttpMethod.POST, "/login").permitAll()
+					   .requestMatchers(HttpMethod.POST,"/user/professor").hasRole("ADMIN")
+					   .requestMatchers(HttpMethod.POST,"/user/admin").hasRole("ADMIN")
 					   .requestMatchers(AUTH_WHITELIST).permitAll()
 					   .anyRequest().authenticated()
 					   
