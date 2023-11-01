@@ -23,10 +23,12 @@ import com.projeto_engenharia.projeto.user.UserRepository;
 import com.projeto_engenharia.projeto.user.UserRequestDTO;
 import com.projeto_engenharia.projeto.user.UserResponseDTO;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
+@Tag(name = "Usuários", description = "Rotas para gestão dos usuários API")
 @RequestMapping("/user")
 public class UserController {
 	

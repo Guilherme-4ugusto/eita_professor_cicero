@@ -19,8 +19,11 @@ import com.projeto_engenharia.projeto.auth.Login;
 import com.projeto_engenharia.projeto.service.TokenService;
 import com.projeto_engenharia.projeto.user.User;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/login")
+@Tag(name = "Autorização", description = "Rotas referentes a autorição da API")
 public class AuthController {
 	
 	@Autowired

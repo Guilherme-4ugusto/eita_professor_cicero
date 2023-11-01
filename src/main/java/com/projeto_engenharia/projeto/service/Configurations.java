@@ -29,6 +29,14 @@ public class Configurations {
 	
 	@Autowired
 	private FilterToken filter;
+
+	
+    private static final String[] AUTH_WHITELIST = {
+		// -- Swagger UI v2
+		"/api-docs/**",
+		"/api-docs.yaml",
+		"/swagger-ui/**"
+	};
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,17 +44,21 @@ public class Configurations {
 			 	csrf
 					.disable()
 			);
+
 			http.cors(cors ->
 				cors.configurationSource(corsConfigurationSource())
 			);
+
 			http.authorizeHttpRequests(matches -> 
 				matches 
 					   .requestMatchers("/user/aluno").permitAll()
 					   .requestMatchers(HttpMethod.POST, "/login").permitAll()
+					   .requestMatchers(AUTH_WHITELIST).permitAll()
 					   .anyRequest().authenticated()
-					   .and()
-					   .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-			);
+					   
+			).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+
+
 			http.sessionManagement(session ->
 				session
 					   .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -13,6 +13,9 @@ import com.projeto_engenharia.projeto.endereco.Endereco;
 import com.projeto_engenharia.projeto.endereco.EnderecoRepository;
 import com.projeto_engenharia.projeto.endereco.EnderecoRequestDTO;
 import com.projeto_engenharia.projeto.user.UserRepository;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.projeto_engenharia.projeto.user.User;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("endereco")
+@Tag(name = "Endereços", description = "Rotas para gestão dos endereços API")
 public class EnderecoController {
 	
 	@Autowired

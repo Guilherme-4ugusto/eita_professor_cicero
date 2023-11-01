@@ -20,12 +20,14 @@ import com.projeto_engenharia.projeto.professor.ProfessorResponseDTO;
 import com.projeto_engenharia.projeto.user.User;
 import com.projeto_engenharia.projeto.user.UserRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("professor")
+@Tag(name = "Professores", description = "Rotas para gestão dos professores API")
 public class ProfessorController {
     @Autowired
     private ProfessorRepository professorRepository;
