@@ -30,18 +30,19 @@ public class AuthController {
 	private TokenService tokenService;
 	
 	@PostMapping
-	public ResponseEntity login(@RequestBody Login login) {
+	public ResponseEntity<Map<String, String>> login(@RequestBody Login login) {
+		Map<String, String> responseData = new HashMap<>();
 		try {
 	        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 	                new UsernamePasswordAuthenticationToken(login.email(), login.password());
 	        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 	        var usuario = (User) authentication.getPrincipal();
 	        String token = tokenService.gerarToken(usuario);
-	        return ResponseEntity.ok(token);
+			responseData.put("token", token);
+	        return ResponseEntity.ok(responseData);
 	    } catch (AuthenticationException ex) {
-			Map<String, String> errors = new HashMap<>();
-			errors.put("error", "Email ou senha incorretos.");
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
+			responseData.put("error", "Email ou senha incorretos.");
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseData);
 	    }
 		
 		

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,19 +33,17 @@ public class ProfessorController {
     @Autowired
     private UserRepository userRepository;
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<ProfessorResponseDTO> getAll() {
     	List<ProfessorResponseDTO> professores = professorRepository.findAll().stream().map(ProfessorResponseDTO::new).toList();
         return professores;	
     }
     
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/{userId}")
-    public ResponseEntity saveProfessor(@PathVariable Long userId, @Valid @RequestBody ProfessorRequestDTO data){
-    	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+    public ResponseEntity<Professor> saveProfessor(@PathVariable Long userId, @Valid @RequestBody ProfessorRequestDTO data){
+    	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
     	Professor professor = professorRepository.save(new Professor(data, user));
-        return ResponseEntity.status(HttpStatus.CREATED).body(professor.getUser().getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(professor);
     }
 }
