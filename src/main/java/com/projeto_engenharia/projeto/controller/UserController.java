@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,12 +34,13 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@PostMapping("/{role}")
-	public ResponseEntity<User> saveUser(@PathVariable String role,@Valid @RequestBody UserRequestDTO data) {
+	public ResponseEntity<UserResponseDTO> saveUser(@PathVariable String role,@Valid @RequestBody UserRequestDTO data) {
 		User userRequest = new User(data);
 		userRequest.setRole(Role.valueOf(role));
 		userRequest.setIsActive(UserStatus.fromDescription(data.isActive()).getValue());
 		User user = userRepository.save(userRequest);
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+		UserResponseDTO response = new UserResponseDTO(user);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@PutMapping("/{userId}/{userStatus}")
@@ -55,13 +57,15 @@ public class UserController {
 	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<User> alterUserData(@PathVariable Long userId, @RequestBody UserRequestDTO data){
+	public ResponseEntity<UserResponseDTO> alterUserData(@PathVariable Long userId, @RequestBody UserRequestDTO data){
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
 		user.setEmail(data.email());
-		user.setPassword(data.password());
+		user.setPassword(passwordEncoder.encode(data.password()));
 		user.setIsActive(UserStatus.fromDescription(data.isActive()).getValue());
 		userRepository.save(user);
-		return ResponseEntity.ok(user);
+		UserResponseDTO response = new UserResponseDTO(user);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
     @GetMapping

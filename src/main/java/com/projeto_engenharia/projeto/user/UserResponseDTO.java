@@ -1,17 +1,20 @@
 package com.projeto_engenharia.projeto.user;
 
+import java.util.Date;
+
 import com.projeto_engenharia.projeto.enums.Role;
 import com.projeto_engenharia.projeto.enums.UserStatus;
 
 public record UserResponseDTO(
+		Long id,
 		String email,
-		String password,
 		Role role,
-		String status
+		String status,
+		Date createDate
 ) {
 
 	public UserResponseDTO(User data){
-		this(data.getEmail(), data.getPassword(), data.getRole(), UserStatus.fromValue(data.getIsActive()).getDescription());
+		this(data.getId(), data.getEmail(), data.getRole(), UserStatus.fromValue(data.getIsActive()).getDescription(), data.getCreateDate());
 	}
 
 }

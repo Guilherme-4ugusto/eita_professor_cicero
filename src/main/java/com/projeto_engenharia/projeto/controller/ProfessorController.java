@@ -41,9 +41,10 @@ public class ProfessorController {
     
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/{userId}")
-    public ResponseEntity<Professor> saveProfessor(@PathVariable Long userId, @Valid @RequestBody ProfessorRequestDTO data){
+    public ResponseEntity<ProfessorResponseDTO> saveProfessor(@PathVariable Long userId, @Valid @RequestBody ProfessorRequestDTO data){
     	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
     	Professor professor = professorRepository.save(new Professor(data, user));
-        return ResponseEntity.status(HttpStatus.CREATED).body(professor);
+        ProfessorResponseDTO response = new ProfessorResponseDTO(professor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
