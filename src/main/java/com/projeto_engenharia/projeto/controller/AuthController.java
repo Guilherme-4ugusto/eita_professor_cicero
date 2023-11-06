@@ -39,8 +39,9 @@ public class AuthController {
 	        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 	                new UsernamePasswordAuthenticationToken(login.email(), login.password());
 	        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-	        var usuario = (User) authentication.getPrincipal();
-	        String token = tokenService.gerarToken(usuario);
+	        User user = (User) authentication.getPrincipal();
+	        String token = tokenService.gerarToken(user);
+			responseData.put("user_id", user.getId().toString());
 			responseData.put("token", token);
 	        return ResponseEntity.ok(responseData);
 	    } catch (AuthenticationException ex) {
