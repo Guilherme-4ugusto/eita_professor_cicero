@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projeto_engenharia.projeto.endereco.Endereco;
 import com.projeto_engenharia.projeto.endereco.EnderecoRepository;
 import com.projeto_engenharia.projeto.endereco.EnderecoRequestDTO;
+import com.projeto_engenharia.projeto.endereco.EnderecoResponseDTO;
 import com.projeto_engenharia.projeto.user.UserRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,10 +34,11 @@ public class EnderecoController {
 	private EnderecoRepository enderecoRepository;
 	
     @PostMapping("/{userId}")
-    public ResponseEntity<Endereco> saveEndereco(@PathVariable Long userId, @Valid  @RequestBody EnderecoRequestDTO data) {
+    public ResponseEntity<EnderecoResponseDTO> saveEndereco(@PathVariable Long userId, @Valid  @RequestBody EnderecoRequestDTO data) {
     	User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
 		Endereco endereco = enderecoRepository.save(new Endereco(data, user));
-		return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
+		EnderecoResponseDTO response = new EnderecoResponseDTO(endereco);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 }
