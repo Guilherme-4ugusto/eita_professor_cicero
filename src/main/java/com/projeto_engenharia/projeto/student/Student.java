@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.projeto_engenharia.projeto.enums.Especialidade;
 import com.projeto_engenharia.projeto.enums.Etnia;
 import com.projeto_engenharia.projeto.enums.Genero;
 import com.projeto_engenharia.projeto.enums.GrauAcademico;
