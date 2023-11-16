@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto_engenharia.projeto.enums.Role;
 import com.projeto_engenharia.projeto.enums.UserStatus;
 import com.projeto_engenharia.projeto.user.User;
 import com.projeto_engenharia.projeto.user.UserRepository;
